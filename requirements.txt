@@ -1,4 +1,5 @@
 matplotlib==3.3.2
+scikit-image
 plotly==4.2.0
 simplejson==3.17.2
 seaborn==0.11.0
