@@ -1,5 +1,0 @@
-install matplotlib
-install plotly
-install json
-install seaborn
-install folium
