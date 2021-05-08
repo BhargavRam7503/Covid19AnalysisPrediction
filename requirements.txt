@@ -4,4 +4,4 @@ plotly
 simplejson
 seaborn
 folium
-SessionState
+
