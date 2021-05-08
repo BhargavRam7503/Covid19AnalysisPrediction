@@ -12,7 +12,6 @@ import plotly.graph_objects as go
 import folium 
 from folium import plugins
 import streamlit as st
-import SessionState
 # Manipulating the default plot size
 import json
 import webbrowser
