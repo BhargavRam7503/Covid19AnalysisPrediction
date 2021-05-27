@@ -7,3 +7,4 @@ folium
 openpyxl
 streamlit_folium
 statsmodels
+sklearn
