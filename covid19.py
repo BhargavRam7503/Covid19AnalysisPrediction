@@ -191,8 +191,6 @@ pred_fig4=fig.update_layout(title="Active Cases Support Vector Machine Regressor
 st.set_page_config(page_title="Covid19 Analysis and Prediction", layout='wide', initial_sidebar_state='collapsed')
 st.markdown("<h1 style='text-align: center;'>Covid 19 India</h1>", unsafe_allow_html=True)
 st.subheader("")
-#side bar
-choice=st.sidebar.radio("",["Home","About","Resources"])
 #creating tabs
 option=st.selectbox("",["Cases","Vaccination","Prediction"])
 #cases tab
