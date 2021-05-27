@@ -6,3 +6,4 @@ seaborn
 folium
 openpyxl
 streamlit_folium
+statsmodels
