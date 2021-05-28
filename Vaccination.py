@@ -24,5 +24,5 @@ class vaccination:
                 'y':0.9,
                 'x':0.5,
                 'xanchor': 'center',
-                'yanchor': 'top'}}
+                'yanchor': 'top'})
                 return figx
