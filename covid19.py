@@ -35,6 +35,7 @@ cases_data=pd.read_csv('https://api.covid19india.org/csv/latest/states.csv')
 cases_data.drop(['Tested','Other'],inplace = True, axis = 1)
 for i in range(len(cases_data['Date'])):
     cases_data['Date'][i]=datetime.datetime.strptime(cases_data['Date'][i], "%Y-%m-%d").date()
+cases_data.drop(cases_data[cases_data['State'].apply(lambda x: x.startswith('State Unassigned'))].index,inplace=True)
 #Adding Active cases Column
 cases_data['Active'] = cases_data['Confirmed']-cases_data['Recovered']-cases_data['Deceased']
 d=cases_data.groupby(["State","Date","Confirmed"]).sum()
@@ -53,10 +54,7 @@ states_coordinates.replace(['Andaman And Nicobar ', 'Andhra Pradesh', 'Arunachal
                             'Chhattisgarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Goa', 'Haryana', 'Himachal Pradesh',
                             'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 'Madhya Pradesh', 'Maharashtra',
                             'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan','Sikkim','Tripura','West Bengal','Ladakh'],inplace=True)
-states=['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh',
-        'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir',
-        'Jharkhand', 'Karnataka', 'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram',
-        'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttarakhand', 'Uttar Pradesh', 'West Bengal']
+states=list(total_cases['State'].unique())
 cases_mapmaker_data = pd.merge(states_coordinates,total_cases,on='State')
 #Cases map
 #statewise table
@@ -191,6 +189,8 @@ pred_fig4=fig.update_layout(title="Active Cases Support Vector Machine Regressor
 st.set_page_config(page_title="Covid19 Analysis and Prediction", layout='wide', initial_sidebar_state='collapsed')
 st.markdown("<h1 style='text-align: center;'>Covid 19 India</h1>", unsafe_allow_html=True)
 st.subheader("")
+#side bar
+choice=st.sidebar.radio("",["Home","About","Resources"])
 #creating tabs
 option=st.selectbox("",["Cases","Vaccination","Prediction"])
 #cases tab
@@ -198,7 +198,7 @@ if(option== "Cases"):
         plot_map,b,updated_table=st.beta_columns(3)
         with plot_map:
             st.subheader("Cases")
-            folium_static(cases.cmap(cases_mapmaker_data),500,520)
+            folium_static(cases.cmap(cases_mapmaker_data),700,520)
         with updated_table:
             latest_cases.reset_index(inplace=True)
             latest_cases.drop(['Date','State','index'],axis='columns',inplace=True)
