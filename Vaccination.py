@@ -19,5 +19,4 @@ class vaccination:
                         folium.CircleMarker([lat, lon], radius=value*0.000002, popup = ('<strong>State</strong>: ' + str(name).capitalize() + '<br>''<strong>Total Individuals Vaccinated</strong>: ' + str(value) + '<br>'),color='Green',fill_color="Green",fill_opacity=0.3 ).add_to(map)
                 return map
         def vfigs(df,X,Y,title):
-                figx=px.bar(df,x=X,y=Y,color_discrete_sequence=px.colors.qualitative.Dark2,title='<b>'+title+'</b>')
-                return figx
+                return px.bar(df,x=X,y=Y,color_discrete_sequence=px.colors.qualitative.Dark2,title='<b>'+title+'</b>')
