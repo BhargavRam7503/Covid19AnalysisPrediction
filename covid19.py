@@ -60,6 +60,7 @@ cases_mapmaker_data = pd.merge(states_coordinates,total_cases,on='State')
 #statewise table
 statewise_table_cases_data=total_cases[['State','Recovered','Deceased','Confirmed','Active']]
 statewise_table_cases_data.reset_index(drop=True,inplace=True)
+statewise_table_cases_data.set_index(['State'],inplace=True)
 #seek bar for changing data according to date
 datelist=[]
 for i in cases_data['Date']:
@@ -198,7 +199,7 @@ if(option== "Cases"):
         plot_map,b,updated_table=st.beta_columns(3)
         with plot_map:
             st.subheader("Cases")
-            folium_static(cases.cmap(cases_mapmaker_data),700,520)
+            folium_static(cases.cmap(cases_mapmaker_data),665,500)
         with updated_table:
             latest_cases.reset_index(inplace=True)
             latest_cases.drop(['Date','State','index'],axis='columns',inplace=True)
@@ -208,13 +209,14 @@ if(option== "Cases"):
             st.subheader("")
             st.table(latest_cases)
         st.subheader("")
-        st.table(statewise_table_cases_data)
-        option1=st.selectbox("",["Statewise Trends","Datewise Trends"])
-        if(option1=="Statewise Trends"):
-            selected_state = st.slider('Select State', 0, 35, 30)
+        ctable=st.beta_columns(2)
+        with ctable[1]:
+            st.table(statewise_table_cases_data)
+        with ctable[0]:
+            selected_state=st.selectbox("",states,30)
             if(selected_state):
-                st.write("State", states[selected_state])
-                upto_selected_state=cases_data['State']==states[selected_state]
+                st.markdown("<h3 style='text-align: center;'>"+str(selected_state)+"</h3>", unsafe_allow_html=True)
+                upto_selected_state=cases_data['State']==selected_state
                 #Cases Graph - 1
                 fig1=cases.cfigs(cases_data[:][upto_selected_state],"Date","Active")
                 #Cases Graph - 2
@@ -223,17 +225,14 @@ if(option== "Cases"):
                 fig3=cases.cfigs(cases_data[:][upto_selected_state],"Date","Deceased")
                 #Cases Graph - 4
                 fig4=cases.cfigs(cases_data[:][upto_selected_state],"Date","Recovered")
-                cases_graphs=st.beta_columns(2)
-                with cases_graphs[0]:
-                    st.plotly_chart(fig1)
-                    st.plotly_chart(fig2)
-                with cases_graphs[1]:
-                    st.plotly_chart(fig3)
-                    st.plotly_chart(fig4)
-        if(option1=="Datewise Trends"):
-            selected_date = st.slider('Select Date', datelist[0], datelist[-1], datelist[-1])
-            if(selected_date):
-                st.write("Date", selected_date)
+                st.plotly_chart(fig1)
+                st.plotly_chart(fig2)
+                st.plotly_chart(fig3)
+                st.plotly_chart(fig4)
+        st.markdown("<h2 style='text-align: center;'>"+"Datewise Trends"+"</h2>", unsafe_allow_html=True)
+        selected_date = st.slider('Select Date', datelist[0], datelist[-1], datelist[-1])
+        if(selected_date):
+                st.markdown("<h3 style='text-align: center;'>"+selected_date.strftime("%d %b %Y")+"</h3>", unsafe_allow_html=True)
                 upto_selected_date=cases_data['Date']<=selected_date
                 #Cases Graph - 1
                 fig1=cases.cfigs(cases_data[:][upto_selected_date],"Date","Active")
