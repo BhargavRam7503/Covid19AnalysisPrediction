@@ -71,6 +71,8 @@ for i in cases_data['Date']:
 df_vaccine_statewise = pd.read_csv("http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv")
 latest_vaccine_date = (df_vaccine_statewise["Updated On"]==(datetime.date.today()-datetime.timedelta(days = 1)).strftime("%d/%m/%Y"))
 latest_vaccine_data = df_vaccine_statewise[latest_vaccine_date][1:]
+statewise_table_vaccine_data=latest_vaccine_data.iloc[:,1:]
+statewise_table_vaccine_data.set_index(["State"],inplace=True)
 #Vaccine Map
 vaccine_mapmaker_data = pd.merge(states_coordinates,latest_vaccine_data,on='State')
 #Vaccine Graphs
@@ -254,9 +256,7 @@ if(option== "Vaccination"):
     with map_plot_col[1]:
         st.subheader("Vaccination")
         folium_static(vaccination.vmap(vaccine_mapmaker_data),500,520)
-    statewise_table_vaccine_data=latest_vaccine_data.iloc[:,1:]
-    statewise_table_vaccine_data.set_index(["State"],inplace=True)
-    st.table(statewise_table_vaccine_data.iloc[:,1:])
+    st.table(statewise_table_vaccine_data)
     vaccine_graphs=st.beta_columns(2)
     with vaccine_graphs[0]:
         st.plotly_chart(fig5)
