@@ -21,8 +21,5 @@ class vaccination:
         def vfigs(df,X,Y,title):
                 figx=px.bar(df,x=X,y=Y,color_discrete_sequence=px.colors.qualitative.Dark2,title='<b>'+title+'</b>')
                 figx.update_layout(title={
-                'y':0.9,
-                'x':0.5,
-                'xanchor': 'center',
-                'yanchor': 'top'})
+                'xanchor': 'center'})
                 return figx
