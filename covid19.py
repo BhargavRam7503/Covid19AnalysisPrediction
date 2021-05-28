@@ -254,7 +254,8 @@ if(option== "Vaccination"):
     with map_plot_col[1]:
         st.subheader("Vaccination")
         folium_static(vaccination.vmap(vaccine_mapmaker_data),500,520)
-    statewise_table_vaccine_data=latest_vaccine_data.iloc[:,1:].reset_index()
+    statewise_table_vaccine_data=latest_vaccine_data.iloc[:,1:]
+    statewise_table_vaccine_data.set_index(["State"],inplace=True)
     st.table(statewise_table_vaccine_data.iloc[:,1:])
     vaccine_graphs=st.beta_columns(2)
     with vaccine_graphs[0]:
