@@ -199,7 +199,7 @@ if(option== "Cases"):
         plot_map,b,updated_table=st.beta_columns(3)
         with plot_map:
             st.subheader("Cases")
-            folium_static(cases.cmap(cases_mapmaker_data),665,500)
+            folium_static(cases.cmap(cases_mapmaker_data),630,500)
         with updated_table:
             latest_cases.reset_index(inplace=True)
             latest_cases.drop(['Date','State','index'],axis='columns',inplace=True)
