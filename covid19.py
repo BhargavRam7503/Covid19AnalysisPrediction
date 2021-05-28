@@ -211,7 +211,7 @@ if(option== "Cases"):
         st.table(statewise_table_cases_data)
         option1=st.selectbox("",["Statewise Trends","Datewise Trends"])
         if(option1=="Statewise Trends"):
-            selected_state = st.slider('Select State', 0, 35, 31)
+            selected_state = st.slider('Select State', 0, 35, 30)
             if(selected_state):
                 st.write("State", states[selected_state])
                 upto_selected_state=cases_data['State']==states[selected_state]
