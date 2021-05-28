@@ -19,4 +19,10 @@ class cases:
                         folium.CircleMarker([lat, lon], radius=value*0.000018,popup = ('<strong>State</strong>: ' + str(name).capitalize() + '<br><strong>Total Cases</strong>: ' + str(value) + '<br>'),color='red',fill_color="red",fill_opacity=0.1 ).add_to(map)
                 return map
         def cfigs(fig_data,X,Y):
-                return px.line(fig_data,x=X,y=Y,title="Covid cases " + str('Date') + ' vs ' + str(Y),template="plotly_dark")
+            figx=px.line(fig_data,x=X,y=Y,title='<b>'+str(Y)+'</b>',template="plotly_dark")
+            figx.update_layout(title={
+        'y':0.9,
+        'x':0.5,
+        'xanchor': 'center',
+        'yanchor': 'top'},width=680,height=330)
+            return figx
