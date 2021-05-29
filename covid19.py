@@ -40,7 +40,8 @@ cases_data.drop(cases_data[cases_data['State'].apply(lambda x: x.startswith('Sta
 cases_data['Active'] = cases_data['Confirmed']-cases_data['Recovered']-cases_data['Deceased']
 d=cases_data.groupby(["State","Date","Confirmed"]).sum()
 #Taking Updated Data
-total_cases=cases_data[:][cases_data['Date']==(datetime.date.today()-datetime.timedelta(days = 1))]
+cases_date=datetime.date.today()-datetime.timedelta(days = 1)
+total_cases=cases_data[:][cases_data['Date']==cases_date]
 latest_cases=total_cases[:][total_cases['State']=="India"]
 total_cases=total_cases[:][total_cases['State']!="India"]
 #Taking indian state coordinates to plot on map
@@ -56,7 +57,11 @@ states_coordinates.replace(['Andaman And Nicobar ', 'Andhra Pradesh', 'Arunachal
                             'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan','Sikkim','Tripura','West Bengal','Ladakh'],inplace=True)
 states=list(total_cases['State'].unique())
 cases_mapmaker_data = pd.merge(states_coordinates,total_cases,on='State')
-#Cases map
+#Cases tab
+latest_cases.reset_index(inplace=True)
+latest_cases.drop(['Date','State','index'],axis='columns',inplace=True)
+ctab1=list(latest_cases)
+ctab2=latest_cases.values.tolist()[0]
 #statewise table
 statewise_table_cases_data=total_cases[['State','Recovered','Deceased','Confirmed','Active']]
 statewise_table_cases_data.reset_index(drop=True,inplace=True)
@@ -69,10 +74,15 @@ for i in cases_data['Date']:
 #Vaccine
 #Creating Dataframe from vaccine data
 df_vaccine_statewise = pd.read_csv("http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv")
-latest_vaccine_date = (df_vaccine_statewise["Updated On"]==(datetime.date.today()-datetime.timedelta(days = 1)).strftime("%d/%m/%Y"))
-latest_vaccine_data = df_vaccine_statewise[latest_vaccine_date][1:]
-statewise_table_vaccine_data=latest_vaccine_data.iloc[:,1:]
+vaccine_date=datetime.date.today()-datetime.timedelta(days = 2)
+latest_vaccine_date = (df_vaccine_statewise["Updated On"]==vaccine_date.strftime("%d/%m/%Y"))
+latest_vaccine_data = df_vaccine_statewise[latest_vaccine_date]
+statewise_table_vaccine_data=latest_vaccine_data.iloc[1:,1:]
 statewise_table_vaccine_data.set_index(["State"],inplace=True)
+#Vaccine Tab
+vtab=latest_vaccine_data.iloc[0,2:]
+vtab1=list(dict(vtab).keys())
+vtab2=list(vtab)
 #Vaccine Map
 vaccine_mapmaker_data = pd.merge(states_coordinates,latest_vaccine_data,on='State')
 #Vaccine Graphs
@@ -198,18 +208,17 @@ choice=st.sidebar.radio("",["Home","About","Resources"])
 option=st.selectbox("",["Cases","Vaccination","Prediction"])
 #cases tab
 if(option== "Cases"):
-        plot_map,b,updated_table=st.beta_columns(3)
+        plot_map,b,cases_tab=st.beta_columns(3)
         with plot_map:
             st.subheader("Cases")
             folium_static(cases.cmap(cases_mapmaker_data),600,500)
-        with updated_table:
-            latest_cases.reset_index(inplace=True)
-            latest_cases.drop(['Date','State','index'],axis='columns',inplace=True)
-            latest_cases=latest_cases.transpose()
-            latest_cases.rename(columns={0:"Total"},inplace=True)
-            st.subheader("As on "+str((datetime.date.today()-datetime.timedelta(days = 1)).strftime("%d %b %Y")))
+        with cases_tab:
+            st.subheader("As on "+cases_date.strftime("%d %b %Y"))
             st.subheader("")
-            st.table(latest_cases)
+            chtml="<table style='width:100%'>"
+            for i in range(len(ctab1)):
+                chtml+="<tr><td>"+str(ctab1[i])+"</td><td>"+str(ctab2[i])+"</td></tr>"
+            st.markdown(chtml+"</table>",unsafe_allow_html=True)
         st.subheader("")
         ctable=st.beta_columns(2)
         with ctable[1]:
@@ -252,10 +261,18 @@ if(option== "Cases"):
                     st.plotly_chart(fig3)
                     st.plotly_chart(fig4)
 if(option== "Vaccination"):
-    map_plot_col=st.beta_columns(3)
-    with map_plot_col[1]:
+    map_plot_col,vaccine_tab=st.beta_columns([2,1])
+    with map_plot_col:
         st.subheader("Vaccination")
-        folium_static(vaccination.vmap(vaccine_mapmaker_data),500,520)
+        folium_static(vaccination.vmap(vaccine_mapmaker_data),600,500)
+    with vaccine_tab:
+        st.subheader("As on "+vaccine_date.strftime("%d %b %Y"))
+        st.subheader("")
+        vhtml="<table style='width:100%'>"
+        for i in range(len(vtab)):
+            vhtml+="<tr><td>"+str(vtab1[i])+"</td><td>"+str(vtab2[i])+"</td></tr>"
+        st.markdown(vhtml+"</table>",unsafe_allow_html=True)
+    st.subheader("")
     st.table(statewise_table_vaccine_data)
     vaccine_graphs=st.beta_columns(2)
     with vaccine_graphs[0]:
