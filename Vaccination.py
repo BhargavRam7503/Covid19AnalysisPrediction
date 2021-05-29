@@ -6,7 +6,7 @@ import plotly.figure_factory as ff
 import plotly.graph_objects as go
 class vaccination:
         def vmap(vaccine_mapmaker_data):
-                map = folium.Map(location=[25, 80], zoom_start=4.5,min_zoom=4)
+                map = folium.Map(location=[25, 80], zoom_start=4.4,min_zoom=4)
                 with open('world-countries.json') as handle:
                         country_geo = json.loads(handle.read())
                         for i in country_geo['features']:
