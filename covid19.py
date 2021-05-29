@@ -210,7 +210,6 @@ option=st.selectbox("",["Cases","Vaccination","Prediction"])
 if(option== "Cases"):
         plot_map,b,cases_tab=st.beta_columns(3)
         with plot_map:
-            st.subheader("Cases")
             folium_static(cases.cmap(cases_mapmaker_data),600,500)
         with cases_tab:
             st.subheader("As on "+cases_date.strftime("%d %b %Y"))
@@ -263,7 +262,6 @@ if(option== "Cases"):
 if(option== "Vaccination"):
     map_plot_col,vaccine_tab=st.beta_columns([2,1])
     with map_plot_col:
-        st.subheader("Vaccination")
         folium_static(vaccination.vmap(vaccine_mapmaker_data),600,600)
     with vaccine_tab:
         st.subheader("As on "+vaccine_date.strftime("%d %b %Y"))
