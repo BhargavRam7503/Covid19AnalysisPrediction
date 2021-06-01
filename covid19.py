@@ -117,7 +117,7 @@ for i in range(15):
 previous_day_cases = india_confirmed[len(india_confirmed) - 1]
 predicted_cases = []
 for i in range(15):
-    predicted_value = math.ceil(previous_day_cases *  growth_factor)
+    predicted_value = math.ceil(previous_day_cases /  growth_factor)
     predicted_cases.append(predicted_value)
     previous_day_cases = predicted_value
 
@@ -284,7 +284,7 @@ if(option== "Vaccination"):
 if(option== "Prediction"):
     predcols=st.beta_columns(2)
     with predcols[0]:
-        st.subheader("Using Growth Factor")
+        st.subheader("Using Reduction Factor")
         st.plotly_chart(pred_fig1)
         st.subheader("Polynomial regression")
         st.plotly_chart(pred_fig3)
