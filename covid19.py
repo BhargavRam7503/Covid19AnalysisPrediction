@@ -187,7 +187,7 @@ if(option== "Cases"):
             st.subheader("")
             chtml="<table style='width:100%'>"
             for i in range(len(ctab1)):
-                chtml+="<tr><td>"+str(ctab1[i])+"</td><td>"+str(ctab2[i])+"</td></tr>"
+                chtml+="<tr><td><b>"+str(ctab1[i])+"</b></td><td>"+str(ctab2[i])+"</td></tr>"
             st.markdown(chtml+"</table>",unsafe_allow_html=True)
         st.subheader("")
         ctable=st.beta_columns(2)
