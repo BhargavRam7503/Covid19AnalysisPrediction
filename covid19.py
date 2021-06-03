@@ -24,8 +24,6 @@ from Vaccination import vaccination
 from statsmodels.tsa.arima_model import ARIMA
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
-from sklearn.svm import SVR
-from sklearn.metrics import mean_squared_error, mean_absolute_error
 # Disable warnings 
 import warnings
 warnings.filterwarnings('ignore')
@@ -103,10 +101,10 @@ fig8= vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],"Updated On",[
 pred_data=cases_data[:][cases_data["State"]=="India"]
 pred_data["Days Since"]=range(0,len(pred_data))
 india_confirmed=list(pred_data["Active"])
-growth_diff = []
+change_diff = []
 for i in range(1,len(india_confirmed)):
-    growth_diff.append(india_confirmed[i] / (india_confirmed[i-1]+1))
-growth_factor = sum(growth_diff)/len(growth_diff)
+    change_diff.append(india_confirmed[i] / (india_confirmed[i-1]+1))
+change_factor = sum(change_diff)/len(change_diff)
 prediction_dates = []
 start_date = datelist[len(datelist) - 1]
 type(datelist[1])
@@ -117,7 +115,7 @@ for i in range(15):
 previous_day_cases = india_confirmed[len(india_confirmed) - 1]
 predicted_cases = []
 for i in range(15):
-    predicted_value = math.ceil(previous_day_cases /  growth_factor)
+    predicted_value = math.ceil(previous_day_cases /  change_factor)
     predicted_cases.append(predicted_value)
     previous_day_cases = predicted_value
 
@@ -140,18 +138,14 @@ for i in range(30):
     prediction_dates.append(date)
     start_date = date
 
-figa=go.Figure()
-figa.add_trace(go.Scatter(y=pred,x=prediction_dates,mode='lines+markers',name = 'Predicted'))
-pred_fig2=figa.add_trace(go.Scatter(y=data['y'],x=data['ds'],mode='lines+markers',name = 'Actual'))
+fig=go.Figure()
+fig.add_trace(go.Scatter(y=pred,x=prediction_dates,mode='lines+markers',name = 'Predicted'))
+pred_fig2=fig.add_trace(go.Scatter(y=data['y'],x=data['ds'],mode='lines+markers',name = 'Actual'))
 
 
 
 train_ml=pred_data.iloc[:int(pred_data.shape[0]*0.95)]
 valid_ml=pred_data.iloc[int(pred_data.shape[0]*0.95):]
-model_scores=[]
-mse=[]
-mae=[]
-rmse = []
 #Polynomial
 poly = PolynomialFeatures(degree = 10)
 linreg=LinearRegression(normalize=True)
@@ -160,9 +154,6 @@ valid_poly=poly.fit_transform(np.array(valid_ml["Days Since"]).reshape(-1,1))
 y=train_ml["Active"]
 linreg.fit(train_poly,y)
 prediction_poly=linreg.predict(valid_poly)
-mse.append(round(mean_squared_error(valid_ml["Active"],prediction_poly),2))
-mae.append(round(mean_absolute_error(valid_ml["Active"],prediction_poly),2))
-rmse.append(round(np.sqrt(mean_squared_error(valid_ml["Active"],prediction_poly)),2))
 
 Prediction_Polynomial_Regression = prediction_poly.tolist()
 comp_data=poly.fit_transform(np.array(pred_data["Days Since"]).reshape(-1,1))
@@ -177,27 +168,6 @@ fig_poly.add_trace(go.Scatter(x=pred_data['Date'], y=predictions_poly,
 pred_fig3=fig_poly.update_layout(title="Active Cases Polynomial Regression Prediction",
                  xaxis_title="Date",yaxis_title="Active Cases",
                  legend=dict(x=0,y=1,traceorder="normal"))
-#SVM
-
-svm=SVR(C=1,degree=5,kernel='poly',epsilon=0.01)
-
-#Fitting model on the training data
-svm.fit(np.array(train_ml["Days Since"]).reshape(-1,1),np.array(train_ml["Active"]).reshape(-1,1))
-
-prediction_valid_svm=svm.predict(np.array(valid_ml["Days Since"]).reshape(-1,1))
-mse.append(round(mean_squared_error(valid_ml["Active"],prediction_valid_svm),2))
-mae.append(round(mean_absolute_error(valid_ml["Active"],prediction_valid_svm),2))
-rmse.append(round(np.sqrt(mean_squared_error(valid_ml["Active"],prediction_valid_svm)),2))
-
-prediction_svm=svm.predict(np.array(pred_data["Days Since"]).reshape(-1,1))
-fig=go.Figure()
-fig.add_trace(go.Scatter(x=pred_data["Date"], y=pred_data["Active"],
-                    mode='lines+markers',name="Train Data for Confirmed Cases"))
-fig.add_trace(go.Scatter(x=pred_data["Date"], y=prediction_svm,
-                    mode='lines',name="Support Vector Machine Best fit Kernel",
-                    line=dict(color='black', dash='dot')))
-pred_fig4=fig.update_layout(title="Active Cases Support Vector Machine Regressor Prediction",
-                 xaxis_title="Date",yaxis_title="Active Cases",legend=dict(x=0,y=1,traceorder="normal"))
 #Title
 st.set_page_config(page_title="Covid19 Analysis and Prediction", layout='wide', initial_sidebar_state='collapsed')
 st.markdown("<h1 style='text-align: center;'>Covid 19 India</h1>", unsafe_allow_html=True)
@@ -208,7 +178,7 @@ choice=st.sidebar.radio("",["Home","About","Resources"])
 option=st.selectbox("",["Cases","Vaccination","Prediction"])
 #cases tab
 if(option== "Cases"):
-        plot_map,b,cases_tab=st.beta_columns(3)
+        plot_map,cases_tab=st.beta_columns([2,1])
         with plot_map:
             st.subheader("")
             folium_static(cases.cmap(cases_mapmaker_data),600,500)
@@ -221,8 +191,6 @@ if(option== "Cases"):
             st.markdown(chtml+"</table>",unsafe_allow_html=True)
         st.subheader("")
         ctable=st.beta_columns(2)
-        with ctable[1]:
-            st.table(statewise_table_cases_data)
         with ctable[0]:
             selected_state=st.selectbox("",states,30)
             if(selected_state):
@@ -240,6 +208,8 @@ if(option== "Cases"):
                 st.plotly_chart(fig2)
                 st.plotly_chart(fig3)
                 st.plotly_chart(fig4)
+        with ctable[1]:
+            st.table(statewise_table_cases_data)
         st.markdown("<h2 style='text-align: center;'>"+"Datewise Trends"+"</h2>", unsafe_allow_html=True)
         selected_date = st.slider('Select Date', datelist[0], datelist[-1], datelist[-1])
         if(selected_date):
@@ -291,5 +261,3 @@ if(option== "Prediction"):
     with predcols[1]:
         st.subheader("Arima model")
         st.plotly_chart(pred_fig2)
-        st.subheader("Support vector regression")
-        st.plotly_chart(pred_fig4)
