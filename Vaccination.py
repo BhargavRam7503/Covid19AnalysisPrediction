@@ -16,7 +16,7 @@ class vaccination:
                     caption='% of Vaccinated People')
                 style_function = lambda x: {"weight":0.5, 
                                             'color':'black',
-                                            'fillColor':linear(x['properties']['vaccine_percent']), 
+                                            'fillColor':linear(x['properties']['Vaccine Percent']), 
                                             'fillOpacity':0.75}
                 highlight_function = lambda x: {'fillColor': '#ADD8E6', 
                                                 'color':'#ADD8E6', 
@@ -27,8 +27,8 @@ class vaccination:
                         style_function=style_function,
                         control=False,
                         highlight_function=highlight_function,
-                        tooltip=folium.features.GeoJsonTooltip(fields=['State','vaccine_percent'],
-                            aliases=['State','vaccine_percent'],
+                        tooltip=folium.features.GeoJsonTooltip(fields=['State','Vaccine Percent'],
+                            aliases=['State','Total Individuals Vaccinated','Total Estimated Population','Vaccine Percent'],
                             style=("background-color: white; color: #333333; font-family: arial; font-size: 12px; padding: 10px;"),
                             sticky=True
                         )
