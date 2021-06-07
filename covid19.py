@@ -11,6 +11,7 @@ import seaborn as sns
 import plotly.express as px
 import plotly.figure_factory as ff
 import plotly.graph_objects as go
+import geopandas as gpd
 import streamlit as st
 from streamlit_folium import folium_static
 # Manipulating the default plot size
@@ -82,7 +83,17 @@ vtab=latest_vaccine_data.iloc[0,2:]
 vtab1=list(dict(vtab).keys())
 vtab2=list(vtab)
 #Vaccine Map
-vaccine_mapmaker_data = pd.merge(states_coordinates,latest_vaccine_data,on='State')
+shp_gdf = gpd.read_file("/content/drive/MyDrive/Colab Notebooks/shapefiles/Indian_states.shp")
+shp_gdf.rename(columns = {'st_nm':'State'}, inplace = True)
+shp_gdf["State"].replace(['Andaman & Nicobar Island', 'Andhra Pradesh', 'Arunanchal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadara & Nagar Havelli', 
+                          'NCT of Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu & Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 
+                          'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 
+                          'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'],
+                ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli and Daman and Diu',
+                 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 'Madhya Pradesh', 'Maharashtra',
+                 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh',
+                 'Uttarakhand', 'West Bengal'],inplace=True)
+vaccine_mapmaker_data = pd.merge(shp_gdf,latest_vaccine_data,on='State')
 #Vaccine Graphs
 indian_vaccine_data = (df_vaccine_statewise["State"]=="India")
 #Vaccine Graph - 1
