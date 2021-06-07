@@ -257,6 +257,7 @@ if(option== "Vaccination"):
         st.subheader("")
         st.subheader("")
         st.subheader("")
+        st.subheader("")
         folium_static(vaccination.vmap(vaccine_mapmaker_data),600,700)
     with vaccine_tab:
         st.subheader("As on "+vaccine_date.strftime("%d %b %Y"))
