@@ -255,6 +255,8 @@ if(option== "Vaccination"):
     map_plot_col,vaccine_tab=st.beta_columns([2,1])
     with map_plot_col:
         st.subheader("")
+        st.subheader("")
+        st.subheader("")
         folium_static(vaccination.vmap(vaccine_mapmaker_data),600,700)
     with vaccine_tab:
         st.subheader("As on "+vaccine_date.strftime("%d %b %Y"))
