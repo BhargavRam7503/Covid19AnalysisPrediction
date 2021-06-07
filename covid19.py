@@ -83,6 +83,16 @@ vtab=latest_vaccine_data.iloc[0,2:]
 vtab1=list(dict(vtab).keys())
 vtab2=list(vtab)
 #Vaccine Map
+total_population=[1371360350,417036,53903393,1570458,35607039,124799926,1158473,29436231,615724,18710922,1586250,
+                  63872399,28204692,7451955,13606320,38593948,67562686,35699443,289023,73183,85358965,
+                  123144223,3091545,3366710,1239244,2249695,46356334,1413542,30141373,81032689,690251,
+                  77841267,39362732,4169794,237882725,11250858,99609303]
+vaccine_updated_data=list(latest_vaccine_data["Total Individuals Vaccinated"])
+vaccine_percent=[]
+for i in range(len(vaccine_updated_data)):
+    vaccine_percent.append(vaccine_updated_data[i]*100/total_population[i])
+latest_vaccine_data["Vaccine Percent"]=vaccine_percent
+latest_vaccine_data["Total Estimated Population"]=total_population
 shp_gdf = gpd.read_file("Indian_states.shp")
 shp_gdf.rename(columns = {'st_nm':'State'}, inplace = True)
 shp_gdf["State"].replace(['Andaman & Nicobar Island', 'Andhra Pradesh', 'Arunanchal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadara & Nagar Havelli', 
