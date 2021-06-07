@@ -83,7 +83,7 @@ vtab=latest_vaccine_data.iloc[0,2:]
 vtab1=list(dict(vtab).keys())
 vtab2=list(vtab)
 #Vaccine Map
-shp_gdf = gpd.read_file("/content/drive/MyDrive/Colab Notebooks/shapefiles/Indian_states.shp")
+shp_gdf = gpd.read_file("Indian_states.shp")
 shp_gdf.rename(columns = {'st_nm':'State'}, inplace = True)
 shp_gdf["State"].replace(['Andaman & Nicobar Island', 'Andhra Pradesh', 'Arunanchal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadara & Nagar Havelli', 
                           'NCT of Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu & Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Lakshadweep', 
