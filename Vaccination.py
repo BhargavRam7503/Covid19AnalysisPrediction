@@ -9,13 +9,6 @@ import branca.colormap as cmp
 class vaccination:
         def vmap(vaccine_mapmaker_data):
                 map = folium.Map(location=[25, 80], zoom_start=4.4,min_zoom=4)
-                with open('world-countries.json') as handle:
-                        country_geo = json.loads(handle.read())
-                        for i in country_geo['features']:
-                                if i['properties']['name'] == 'India':
-                                        country = i
-                                        break
-                folium.GeoJson(country,name='India').add_to(map)
                 folium.TileLayer('CartoDB positron',name="Light Map",control=False).add_to(map)
                 linear = cmp.LinearColormap(
                     ['#7CFC00','#7CFC00','#32CD32','#00FF00','#228B22','#008000','#006400'],
