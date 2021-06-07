@@ -27,7 +27,7 @@ class vaccination:
                         style_function=style_function,
                         control=False,
                         highlight_function=highlight_function,
-                        tooltip=folium.features.GeoJsonTooltip(fields=['State','Vaccine Percent'],
+                        tooltip=folium.features.GeoJsonTooltip(fields=['State','Total Individuals Vaccinated','Total Estimated Population','Vaccine Percent'],
                             aliases=['State','Total Individuals Vaccinated','Total Estimated Population','Vaccine Percent'],
                             style=("background-color: white; color: #333333; font-family: arial; font-size: 12px; padding: 10px;"),
                             sticky=True
