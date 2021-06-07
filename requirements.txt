@@ -8,3 +8,4 @@ openpyxl
 streamlit_folium
 statsmodels
 sklearn
+geopandas
