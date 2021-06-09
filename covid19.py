@@ -193,8 +193,8 @@ pred_fig3=fig_poly.update_layout(title="Active Cases Polynomial Regression Predi
 st.set_page_config(page_title="Covid19 Analysis and Prediction", layout='wide', initial_sidebar_state='collapsed')
 st.markdown("<h1 style='text-align: center;'>Covid 19 India</h1>", unsafe_allow_html=True)
 st.subheader("")
-#side bar
-choice=st.sidebar.radio("",["Home","About","Resources"])
+
+
 #creating tabs
 option=st.selectbox("",["Cases","Vaccination","Prediction"])
 #cases tab
