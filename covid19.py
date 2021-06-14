@@ -120,10 +120,10 @@ fig8= vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],"Updated On",[
 #Prediction
 pred_data=cases_data[:][cases_data["State"]=="India"]
 pred_data["Days Since"]=range(0,len(pred_data))
-india_confirmed=list(pred_data["Active"])
+india_active=list(pred_data["Active"])
 change_diff = []
-for i in range(1,len(india_confirmed)):
-    change_diff.append(india_confirmed[i] / (india_confirmed[i-1]+1))
+for i in range(1,len(india_active)):
+    change_diff.append(india_active[i] / (india_active[i-1]+1))
 change_factor = sum(change_diff)/len(change_diff)
 prediction_dates = []
 start_date = datelist[len(datelist) - 1]
@@ -132,7 +132,7 @@ for i in range(15):
     date = start_date + datetime.timedelta(days=1)
     prediction_dates.append(date)
     start_date = date
-previous_day_cases = india_confirmed[len(india_confirmed) - 1]
+previous_day_cases = india_active[len(india_active) - 1]
 predicted_cases = []
 for i in range(15):
     predicted_value = math.ceil(previous_day_cases /  change_factor)
@@ -144,7 +144,7 @@ pred_fig1=fig.add_trace(go.Scatter(y=predicted_cases,x=prediction_dates,mode='li
 
 data = pd.DataFrame(columns = ['ds','y'])
 data['ds'] = datelist
-data['y'] = india_confirmed
+data['y'] = india_active
 
 arima = ARIMA(data['y'], order=(5, 1, 0))
 arima = arima.fit(trend='c', full_output=True, disp=True)
