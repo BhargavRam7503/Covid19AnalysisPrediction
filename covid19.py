@@ -127,7 +127,6 @@ for i in range(1,len(india_active)):
 change_factor = sum(change_diff)/len(change_diff)
 prediction_dates = []
 start_date = datelist[len(datelist) - 1]
-type(datelist[1])
 for i in range(15):
     date = start_date + datetime.timedelta(days=1)
     prediction_dates.append(date)
