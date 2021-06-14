@@ -24,5 +24,5 @@ class cases:
         'y':0.9,
         'x':0.5,
         'xanchor': 'center',
-        'yanchor': 'top'},width=600,height=350)
+        'yanchor': 'top'},height=350)
             return figx
