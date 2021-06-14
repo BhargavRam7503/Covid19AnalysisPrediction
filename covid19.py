@@ -37,7 +37,6 @@ for i in range(len(cases_data['Date'])):
 cases_data.drop(cases_data[cases_data['State'].apply(lambda x: x.startswith('State Unassigned'))].index,inplace=True)
 #Adding Active cases Column
 cases_data['Active'] = cases_data['Confirmed']-cases_data['Recovered']-cases_data['Deceased']
-d=cases_data.groupby(["State","Date","Confirmed"]).sum()
 #Taking Updated Data
 cases_date=datetime.date.today()-datetime.timedelta(days = 1)
 total_cases=cases_data[:][cases_data['Date']==cases_date]
