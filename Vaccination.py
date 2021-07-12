@@ -30,7 +30,6 @@ class vaccination:
                         tooltip=folium.features.GeoJsonTooltip(fields=['State','Total Individuals Vaccinated','Total Estimated Population','Vaccine Percent'],
                             aliases=['State','Total Individuals Vaccinated','Total Estimated Population','Vaccine Percent'],
                             style=("background-color: white; color: #333333; font-family: arial; font-size: 12px; padding: 10px;"),
-                            sticky=True
                         )
                     ).add_to(map)
                 map.add_child(map_child)
