@@ -36,5 +36,5 @@ class vaccination:
                 map.add_child(map_child)
                 map.keep_in_front(map_child)
                 return map
-        def vfigs(df,X,Y,title):
-                return px.bar(df,x=X,y=Y,color_discrete_sequence=px.colors.qualitative.Dark2,title='<b>'+title+'</b>')
+        def vfigs(df,X,Y,title1):
+                return px.bar(df,x=X,y=Y,color_discrete_sequence=px.colors.qualitative.Dark2,title='<b>'+title1+'</b>')
