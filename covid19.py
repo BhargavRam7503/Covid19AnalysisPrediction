@@ -105,18 +105,19 @@ shp_gdf["State"].replace(['Andaman & Nicobar Island', 'Andhra Pradesh', 'Arunanc
 vaccine_mapmaker_data = pd.merge(shp_gdf,latest_vaccine_data,on='State')
 #Vaccine Graphs
 indian_vaccine_data = (df_vaccine_statewise["State"]=="India")
+vaccine_cols=list(df_vaccine_statewise)
 #Vaccine Graph - 1
-fig5 = vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],"Updated On","Total Individuals Vaccinated","Total Individuals Vaccinated")
+fig5 = vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],vaccine_cols[0],vaccine_cols[23],vaccine_cols[23])
 fig5.update_xaxes(title_text="Dates")
 fig5.update_yaxes(title_text="Number of Persons Vaccinated")
 #Vaccine Graph - 2
-fig6 = vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],"Updated On",["First Dose Administered","Second Dose Administered"],"First Dose and Second Dose Administered Comparison all over India")
+fig6 = vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],vaccine_cols[0],[vaccine_cols[5],vaccine_cols[6]],"First Dose and Second Dose Administered Comparison all over India")
 fig6.update_xaxes(title_text="Dates")
 fig6.update_yaxes(title_text="No of persons given vaccines")
 #Vaccine Graph - 3
-fig7 = vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],"Updated On",["Total Covaxin Administered","Total CoviShield Administered"],"Covaxin vs CoviShield")
+fig7 = vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],vaccine_cols[0],[vaccine_cols[10],vaccine_cols[11],vaccine_cols[12]],"Covaxin vs CoviShield VS Sputnik V")
 #Vaccine Graph - 4
-fig8= vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],"Updated On",["Male(Individuals Vaccinated)","Female(Individuals Vaccinated)"],"Male vs Female vaccinated in India")
+fig8= vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],vaccine_cols[0],[vaccine_cols[20],vaccine_cols[21]],"Male vs Female vaccinated in India")
 #Prediction
 pred_data=cases_data[:][cases_data["State"]=="India"]
 pred_data["Days Since"]=range(0,len(pred_data))
