@@ -28,7 +28,7 @@ from sklearn.linear_model import LinearRegression
 # Disable warnings 
 import warnings
 warnings.filterwarnings('ignore')
-
+magicEnabled
 #Cases
 #Creating Dataframe from cases data
 cases_data=pd.read_csv('https://api.covid19india.org/csv/latest/states.csv')
