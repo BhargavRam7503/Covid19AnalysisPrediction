@@ -28,7 +28,6 @@ from sklearn.linear_model import LinearRegression
 # Disable warnings 
 import warnings
 warnings.filterwarnings('ignore')
-magicEnabled
 #Cases
 #Creating Dataframe from cases data
 cases_data=pd.read_csv('https://api.covid19india.org/csv/latest/states.csv')
@@ -72,7 +71,7 @@ for i in cases_data['Date']:
         datelist.append(i)
 #Vaccine
 #Creating Dataframe from vaccine data
-'''
+l='''
 df_vaccine_statewise = pd.read_csv("http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv")
 vaccine_date=datetime.date.today()-datetime.timedelta(days = 2)
 latest_vaccine_date = (df_vaccine_statewise["Updated On"]==vaccine_date.strftime("%d/%m/%Y"))
@@ -255,7 +254,7 @@ if(option== "Cases"):
                     st.plotly_chart(fig4)
 if(option== "Vaccination"):
     st.subheader("Vaccination Data unavailable currently")
-    '''
+    l='''
     map_plot_col,vaccine_tab=st.beta_columns([2,1])
     with map_plot_col:
         st.subheader("")
