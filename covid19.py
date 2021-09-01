@@ -245,7 +245,7 @@ if(option== "Cases"):
                 fig3=cases.cfigs(cases_data[:][upto_selected_date],"Date","Deceased")
                 #Cases Graph - 4
                 fig4=cases.cfigs(cases_data[:][upto_selected_date],"Date","Recovered")
-                cases_graphs=st.beta_columns(2)
+                cases_graphs=st.columns(2)
                 with cases_graphs[0]:
                     st.plotly_chart(fig1)
                     st.plotly_chart(fig2)
