@@ -200,7 +200,7 @@ st.subheader("")
 option=st.selectbox("",["Cases","Vaccination","Prediction"])
 #cases tab
 if(option== "Cases"):
-        plot_map,cases_tab=st.beta_columns([2,1])
+        plot_map,cases_tab=st.columns([2,1])
         with plot_map:
             st.subheader("")
             folium_static(cases.cmap(cases_mapmaker_data),600,500)
@@ -212,7 +212,7 @@ if(option== "Cases"):
                 chtml+="<tr><td><b>"+str(ctab1[i])+"</b></td><td>"+str(ctab2[i])+"</td></tr>"
             st.markdown(chtml+"</table>",unsafe_allow_html=True)
         st.subheader("")
-        ctable=st.beta_columns(2)
+        ctable=st.columns(2)
         with ctable[0]:
             selected_state=st.selectbox("",states,30)
             if(selected_state):
@@ -255,7 +255,7 @@ if(option== "Cases"):
 if(option== "Vaccination"):
     st.subheader("Vaccination Data unavailable currently")
     l='''
-    map_plot_col,vaccine_tab=st.beta_columns([2,1])
+    map_plot_col,vaccine_tab=st.columns([2,1])
     with map_plot_col:
         st.subheader("")
         st.subheader("")
@@ -271,7 +271,7 @@ if(option== "Vaccination"):
         st.markdown(vhtml+"</table>",unsafe_allow_html=True)
     st.subheader("")
     st.table(statewise_table_vaccine_data)
-    vaccine_graphs=st.beta_columns(2)
+    vaccine_graphs=st.columns(2)
     with vaccine_graphs[0]:
         st.plotly_chart(fig5)
         st.plotly_chart(fig6)
@@ -280,7 +280,7 @@ if(option== "Vaccination"):
         st.plotly_chart(fig8)
         '''
 if(option== "Prediction"):
-    predcols=st.beta_columns(2)
+    predcols=st.columns(2)
     with predcols[0]:
         st.subheader("Using Reduction Factor")
         st.plotly_chart(pred_fig1)
