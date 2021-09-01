@@ -71,7 +71,7 @@ for i in cases_data['Date']:
         datelist.append(i)
 #Vaccine
 #Creating Dataframe from vaccine data
-df_vaccine_statewise = pd.read_csv("http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv")
+'''df_vaccine_statewise = pd.read_csv("http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv")
 vaccine_date=datetime.date.today()-datetime.timedelta(days = 2)
 latest_vaccine_date = (df_vaccine_statewise["Updated On"]==vaccine_date.strftime("%d/%m/%Y"))
 latest_vaccine_data = df_vaccine_statewise[latest_vaccine_date]
@@ -117,7 +117,7 @@ fig6.update_yaxes(title_text="No of persons given vaccines")
 #Vaccine Graph - 3
 fig7 = vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],vaccine_cols[0],[vaccine_cols[10],vaccine_cols[11],vaccine_cols[12]],"Covaxin vs CoviShield VS Sputnik V")
 #Vaccine Graph - 4
-fig8= vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],vaccine_cols[0],[vaccine_cols[20],vaccine_cols[21]],"Male vs Female vaccinated in India")
+fig8= vaccination.vfigs(df_vaccine_statewise[indian_vaccine_data],vaccine_cols[0],[vaccine_cols[20],vaccine_cols[21]],"Male vs Female vaccinated in India")'''
 #Prediction
 pred_data=cases_data[:][cases_data["State"]=="India"]
 pred_data["Days Since"]=range(0,len(pred_data))
@@ -251,7 +251,8 @@ if(option== "Cases"):
                     st.plotly_chart(fig3)
                     st.plotly_chart(fig4)
 if(option== "Vaccination"):
-    map_plot_col,vaccine_tab=st.beta_columns([2,1])
+    st.subheader("Vaccination Data unavailable currently")
+    '''map_plot_col,vaccine_tab=st.beta_columns([2,1])
     with map_plot_col:
         st.subheader("")
         st.subheader("")
@@ -273,7 +274,7 @@ if(option== "Vaccination"):
         st.plotly_chart(fig6)
     with vaccine_graphs[1]:
         st.plotly_chart(fig7)
-        st.plotly_chart(fig8)
+        st.plotly_chart(fig8)'''
 if(option== "Prediction"):
     predcols=st.beta_columns(2)
     with predcols[0]:
