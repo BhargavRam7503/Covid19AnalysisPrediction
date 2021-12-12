@@ -149,7 +149,7 @@ data['ds'] = datelist
 data['y'] = india_active
 
 arima = ARIMA(data['y'], order=(5, 1, 0))
-arima = arima.fit(trend='c', full_output=True, disp=True)
+'''arima = arima.fit(trend='c', full_output=True, disp=True)
 forecast = arima.forecast(steps= 30)
 pred = list(forecast[0])
 
@@ -162,7 +162,7 @@ for i in range(30):
 
 fig=go.Figure()
 fig.add_trace(go.Scatter(y=pred,x=prediction_dates,mode='lines+markers',name = 'Predicted'))
-pred_fig2=fig.add_trace(go.Scatter(y=data['y'],x=data['ds'],mode='lines+markers',name = 'Actual'))
+pred_fig2=fig.add_trace(go.Scatter(y=data['y'],x=data['ds'],mode='lines+markers',name = 'Actual'))'''
 
 
 
