@@ -59,7 +59,7 @@ cases_mapmaker_data = pd.merge(states_coordinates,total_cases,on='State')
 latest_cases.reset_index(inplace=True)
 latest_cases.drop(['Date','State','index'],axis='columns',inplace=True)
 ctab1=list(latest_cases)
-ctab2=latest_cases.values.tolist()[0]
+#ctab2=latest_cases.values.tolist()[0]
 #statewise table
 statewise_table_cases_data=total_cases[['State','Recovered','Deceased','Confirmed','Active']]
 statewise_table_cases_data.reset_index(drop=True,inplace=True)
